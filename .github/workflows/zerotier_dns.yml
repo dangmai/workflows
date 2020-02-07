@@ -14,6 +14,6 @@ jobs:
     steps:
       - name: Get Zerotier Network members
         run: |
-          curl -H "Content-Type: application/json" -H "Authorization: Bearer ${{ ZEROTIER_AUTH_TOKEN }}" https://my.zerotier.com/api/network/${{ ZEROTIER_NETWORK_ID }}/member |
+          curl -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.ZEROTIER_AUTH_TOKEN }}" https://my.zerotier.com/api/network/${{ secrets.ZEROTIER_NETWORK_ID }}/member |
           jq '[.[] | select(.config.authorized and .name != "" and type = "Member")]' |
           jq 'map({name: .name, id: .config.ipAssignments[0]})'
