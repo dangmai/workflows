@@ -1,0 +1,19 @@
+name: Update Zerotier DNS
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Zerotier Network members
+        run: |
+          curl -H "Content-Type: application/json" -H "Authorization: Bearer ${{ ZEROTIER_AUTH_TOKEN }}" https://my.zerotier.com/api/network/${{ ZEROTIER_NETWORK_ID }}/member |
+          jq '[.[] | select(.config.authorized and .name != "" and type = "Member")]' |
+          jq 'map({name: .name, id: .config.ipAssignments[0]})'
