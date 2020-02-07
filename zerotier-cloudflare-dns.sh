@@ -38,6 +38,6 @@ do
   fi
 done </tmp/zt.json
 
-rm /tmp/zt.json
-rm /tmp/cf.json
-rm /tmp/status.json
+rm -f /tmp/zt.json
+rm -f /tmp/cf.json
+rm -f /tmp/status.json
