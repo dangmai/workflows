@@ -4,16 +4,17 @@ set -euo pipefail
 # Configurable options
 DOMAIN="zt.dangmai.net"
 
-# Get the Zerotier names and ips
+echo "Get Zerotier names and ips"
 curl -s --fail -H "Content-Type: application/json" -H "Authorization: Bearer ${ZEROTIER_AUTH_TOKEN}" https://my.zerotier.com/api/network/${ZEROTIER_NETWORK_ID}/member \
   | jq '[.[] | select(.config.authorized and .name != "" and type = "Member")]' \
   | jq -c '.[] | {name: .name, ip: .config.ipAssignments[0]}' > /tmp/zt.json
 
-# Iterate through Zerotier entries and creating associated Cloudflare DNS entries
+echo "Iterate through Zerotier entries and creating associated Cloudflare DNS entries"
 while IFS="" read -r line || [ -n "$line" ]
 do
   entry_name=$(echo "$line" | jq -r ".name += \".${DOMAIN}\" | .name")
   entry_ip=$(echo "$line" | jq -r ".ip")
+  echo "Processing entry ${entry_name}"
   curl -s --fail -X GET "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/dns_records?name=${entry_name}&type=A&per_page=100" \
        -H "Authorization: Bearer ${CLOUDFLARE_AUTH_TOKEN}" \
        -H "Content-Type:application/json" > /tmp/cf.json
