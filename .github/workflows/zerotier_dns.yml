@@ -1,6 +1,8 @@
 name: Update Zerotier DNS
 
 on:
+  repository_dispatch:
+    types: zt-dns-update
   push:
     branches:
       - master
