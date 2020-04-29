@@ -12,7 +12,7 @@ curl -s --fail -H "Content-Type: application/json" -H "Authorization: Bearer ${Z
 echo "Iterate through Zerotier entries and creating associated Cloudflare DNS entries"
 while IFS="" read -r line || [ -n "$line" ]
 do
-  entry_name=$(echo "$line" | jq -r ".name += \".${DOMAIN}\" | .name")
+  entry_name=$(echo "$line" | jq -r ".name += \".${DOMAIN}\" | .name" | tr '[:upper:]' '[:lower:]')
   entry_ip=$(echo "$line" | jq -r ".ip")
   echo "Processing entry ${entry_name}"
   curl -s --fail -X GET "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/dns_records?name=${entry_name}&type=A&per_page=100" \
