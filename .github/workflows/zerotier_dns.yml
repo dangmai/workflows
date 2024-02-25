@@ -1,6 +1,7 @@
 name: Update Zerotier DNS
 
 on:
+  workflow_dispatch:
   repository_dispatch:
     types: zt-dns-update
   push:
