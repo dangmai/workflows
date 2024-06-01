@@ -1,0 +1,19 @@
+{
+  "extends": ["config:base"],
+  "bumpVersion": "patch",
+  "timezone": "America/Los_Angeles",
+  "assignees": ["dangmai"],
+  "stabilityDays": 3,
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+        "lockFileMaintenance"
+      ],
+      "automerge": true
+    }
+  ]
+}
