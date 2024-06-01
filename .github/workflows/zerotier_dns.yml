@@ -3,12 +3,12 @@ name: Update Zerotier DNS
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: zt-dns-update
+    types: [zt-dns-update]
   push:
     branches:
       - master
   schedule:
-    - cron: '*/60 * * * *'
+    - cron: "15 * * * *"
 
 jobs:
   dns:
