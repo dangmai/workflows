@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Update Zerotier DNS
         env:
           ZEROTIER_AUTH_TOKEN: ${{ secrets.ZEROTIER_AUTH_TOKEN }}
